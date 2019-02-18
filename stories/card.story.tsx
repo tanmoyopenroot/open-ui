@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { WRAPPER, IWrapperProps } from './wrapper';
+import { StoryWrapper, IStoryWrapperProps } from './wrapper';
 import { Card, ICardProps } from '../src';
 
-const wrapperProps:IWrapperProps = {
+const wrapperProps:IStoryWrapperProps = {
   width: '30%',
 };
 
@@ -15,7 +15,7 @@ const props:ICardProps = {
 const stories = storiesOf('Card', module);
 
 stories.add('default', () => (
-  <WRAPPER
+  <StoryWrapper
     {...wrapperProps}
   >
     <Card
@@ -30,5 +30,5 @@ stories.add('default', () => (
       </p>
       <a href="#">Go somewhere</a>
     </Card>
-  </WRAPPER>),
+  </StoryWrapper>),
 );

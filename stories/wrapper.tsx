@@ -4,11 +4,11 @@ import { createThemeStore } from 'theme';
 
 createThemeStore();
 
-export interface IWrapperProps extends HTMLDivProps {
+export interface IStoryWrapperProps extends HTMLDivProps {
   width: string;
 }
 
-export const WRAPPER = (props: IWrapperProps) => {
+export const StoryWrapper: React.FunctionComponent<IStoryWrapperProps> = (props) => {
   const {
     width,
     ...htmlProps
