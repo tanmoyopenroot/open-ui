@@ -5,3 +5,5 @@ export enum Elevation {
   THREE = 3,
   FOUR = 4,
 }
+
+export type TElevation = typeof Elevation;

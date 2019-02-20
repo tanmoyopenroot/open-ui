@@ -1,8 +1,14 @@
 import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import { StoryWrapper, IStoryWrapperProps } from './wrapper';
-import { Card, ICardProps } from '../src';
+import {
+  StoryWrapper,
+  IStoryWrapperProps,
+} from './wrapper';
+import {
+  Card,
+  ICardProps,
+} from '../src';
 
 const wrapperProps:IStoryWrapperProps = {
   width: '30%',
