@@ -15,7 +15,7 @@ const wrapperProps:IStoryWrapperProps = {
 };
 
 const props:ICardProps = {
-  elevation: Card.ELEVATION.TWO,
+  elevation: Card.Elevation.TWO,
 };
 
 const stories = storiesOf('Card', module);

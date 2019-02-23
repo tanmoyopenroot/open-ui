@@ -8,7 +8,7 @@ export interface IStoryWrapperProps extends HTMLDivProps {
   width: string;
 }
 
-export const StoryWrapper: React.FunctionComponent<IStoryWrapperProps> = (props) => {
+const wrapper: React.FunctionComponent<IStoryWrapperProps> = (props) => {
   const {
     width,
     ...htmlProps
@@ -25,4 +25,8 @@ export const StoryWrapper: React.FunctionComponent<IStoryWrapperProps> = (props)
       {...htmlProps}
     />
   );
+};
+
+export {
+  wrapper as StoryWrapper,
 };
