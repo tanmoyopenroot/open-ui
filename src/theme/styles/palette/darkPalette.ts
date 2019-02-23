@@ -23,6 +23,11 @@ export default (palette: IPaletteOptions) => ({
     paper: palette.background.dark,
     default: '#303030',
   },
+  fontSize: {
+    small: palette.fontSize.small,
+    default: palette.fontSize.default,
+    large: palette.fontSize.large,
+  },
   action: {
     active: palette.action.active.dark,
     hover: palette.action.hover.dark,

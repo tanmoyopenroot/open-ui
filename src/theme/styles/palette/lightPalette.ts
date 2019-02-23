@@ -23,6 +23,11 @@ export default (palette: IPaletteOptions) => ({
     paper: palette.background.light,
     default: colors.Grey[50],
   },
+  fontSize: {
+    small: palette.fontSize.small,
+    default: palette.fontSize.default,
+    large: palette.fontSize.large,
+  },
   action: {
     active: palette.action.active.light,
     hover: palette.action.hover.light,

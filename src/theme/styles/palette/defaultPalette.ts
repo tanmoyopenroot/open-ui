@@ -4,6 +4,7 @@ import {
   ITextPalette,
   IPaletteOptions,
   themeType,
+  IFontPalette,
 } from './props';
 
 const actionPalette: IActionPalette = {
@@ -56,6 +57,14 @@ const textPalette: ITextPalette = {
   },
 };
 
+const fontPalette: IFontPalette = {
+  fontSize: {
+    small: 11,
+    default: 14,
+    large: 17,
+  },
+};
+
 const defaultPalette: IPaletteOptions = {
   primary: {
     light: colors.Indigo[300],
@@ -97,6 +106,7 @@ const defaultPalette: IPaletteOptions = {
     light: 'rgba(0, 0, 0, 0.38)',
     dark: 'rgba(255, 255, 255, 0.5)',
   },
+  fontSize: fontPalette.fontSize,
   action: actionPalette.action,
   text: textPalette.text,
   type: themeType.light,

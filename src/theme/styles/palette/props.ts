@@ -1,10 +1,12 @@
+import * as colors from '../colors';
+
 export enum themeType {
   light = 'light',
   dark  = 'dark',
 }
 
 export interface IPalette {
-  colors: object;
+  colors: typeof colors;
   primary: string;
   secondary: string;
   error: string;
@@ -13,6 +15,11 @@ export interface IPalette {
   hint: string;
   icon: string;
   disabled: string;
+  fontSize: {
+    small: number,
+    default: number,
+    large: number,
+  };
   text: {
     primary: string;
     secondary: string;
@@ -85,7 +92,15 @@ export interface IActionPalette {
   };
 }
 
-export interface IPaletteOptions extends ITextPalette, IActionPalette {
+export interface IFontPalette {
+  fontSize: {
+    small: number,
+    default: number,
+    large: number,
+  };
+}
+
+export interface IPaletteOptions extends ITextPalette, IActionPalette, IFontPalette {
   primary: {
     light: string,
     dark: string,
