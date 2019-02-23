@@ -1,16 +1,22 @@
 import * as React from 'react';
+import jss from 'jss';
+import jssPresetDefault from 'jss-preset-default';
+
 import { IThemeOptions } from './createTheme';
 import createTheme, { ITheme } from 'theme/createTheme';
 
+type TSetters = React.Dispatch<React.SetStateAction<ITheme>>;
+
 interface IStore {
-  state: ITheme,
-  setThemeState: Function,
-  setters: Array<Function>,
+  state: ITheme;
+  setThemeState: Function;
+  setters: TSetters[];
 }
 
 let store: IStore;
 
 export const createThemeStore = (options?: IThemeOptions) => {
+  jss.setup(jssPresetDefault());
   const theme = createTheme(options);
 
   store = {
@@ -19,22 +25,25 @@ export const createThemeStore = (options?: IThemeOptions) => {
       this.state = value;
       this.setters.forEach(setter => setter(this.state));
     },
-    setters: []
+    setters: [],
   };
-    
+
   store.setThemeState = store.setThemeState.bind(store);
 };
 
 export const useThemeStore = (): [ ITheme, Function ] => {
-  const [ state, set ] = React.useState(store.state);
+  const [state, set] = React.useState(store.state);
 
   if (!store.setters.includes(set)) {
     store.setters.push(set);
   }
 
-  React.useEffect(() => () => {
-    store.setters = store.setters.filter(setter => setter !== set)
-  }, [])
+  React.useEffect(
+    () => () => {
+      store.setters = store.setters.filter(setter => setter !== set);
+    },
+    [],
+  );
 
-  return [ state, store.setThemeState ];
-}
+  return [state, store.setThemeState];
+};
