@@ -2,37 +2,21 @@ import * as React from 'react';
 
 import { DISPLAY_NAME_PREFIX } from 'common/info';
 import { useThemeStore } from 'theme';
-import iconStyles from './icon.styles';
-import {
-  IconList,
-  TIconName,
-} from 'common/icons';
+import { IconList } from 'common/icons';
 import {
   Intent,
   TIntent,
 } from 'common/intent';
 import {
-  IProps,
-} from 'common/props';
-import {
   Size,
   TSize,
 } from 'common/size';
 
-interface IIcon<P = {}> extends React.FunctionComponent<P> {
-  Intent: TIntent;
-  Size: TSize;
-  Value: TIconName;
-}
-
-export interface IIconProps extends IProps {
-  children?: never;
-  size?: Size;
-  intent?: Intent;
-  disabled?: boolean;
-  icon?: string;
-  elementRef?: (ref: HTMLElement | null) => any;
-}
+import iconStyles from './icon.styles';
+import {
+  IIcon,
+  IIconProps,
+} from './props';
 
 const icon: IIcon<IIconProps> = (props) => {
   const {

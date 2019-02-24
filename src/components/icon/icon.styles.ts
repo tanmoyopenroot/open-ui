@@ -1,9 +1,10 @@
 import jss from 'jss';
 
 import { ITheme } from 'theme';
-import { IIconProps } from './icon';
 import { Intent } from 'common/intent';
 import { Size } from 'common/size';
+
+import { IIconProps } from './props';
 
 export default (props: IIconProps) => (theme: ITheme) => {
   const getIntent = () => {
