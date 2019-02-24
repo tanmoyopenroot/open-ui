@@ -20,7 +20,7 @@ const setup = () => {
   const wrapper = enzyme.mount(
     <Icon
       {...props}
-    />
+    />,
   );
 
   return {
