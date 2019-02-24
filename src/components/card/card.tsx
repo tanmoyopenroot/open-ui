@@ -2,24 +2,13 @@ import * as React from 'react';
 
 import { DISPLAY_NAME_PREFIX } from 'common/info';
 import { useThemeStore } from 'theme';
+import { Elevation } from 'common/elevation';
+
 import cardStyles from './card.styles';
 import {
-  Elevation,
-  TElevation,
-} from 'common/elevation';
-import {
-  IProps,
-  HTMLDivProps,
-} from 'common/props';
-
-interface ICard<P = {}> extends React.FunctionComponent<P> {
-  Elevation: TElevation;
-}
-
-export interface ICardProps extends IProps, HTMLDivProps {
-  elevation?: Elevation;
-  style?: Object;
-}
+  ICard,
+  ICardProps,
+} from './props';
 
 const card: ICard<ICardProps> = (props) => {
   const {

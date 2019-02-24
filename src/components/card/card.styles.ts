@@ -1,7 +1,8 @@
 import jss from 'jss';
 
 import { ITheme } from 'theme';
-import { ICardProps } from './card';
+
+import { ICardProps } from './props';
 
 export default (props: ICardProps) => (theme: ITheme) => jss
   .createStyleSheet({

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import * as enzyme from 'enzyme';
 
-import {
-  Card,
-  ICardProps,
-} from 'components';
 import { createThemeStore } from 'theme';
+
+import { Card } from './card';
+import { ICardProps } from './props';
 
 const setup = () => {
   createThemeStore();
