@@ -1,39 +1,28 @@
 import * as colors from '../colors';
-import { IPaletteOptions } from './props';
+import {
+  IPaletteOptions,
+  IPalette,
+} from './props';
 
-export default (palette: IPaletteOptions) => ({
+export default (palette: IPaletteOptions): IPalette => ({
   colors,
-  primary: palette.primary.dark,
-  secondary: palette.secondary.dark,
-  error: palette.error.dark,
-  success: palette.success.dark,
-  default: palette.default.dark,
-  hint:  palette.hint.dark,
-  icon: palette.icon.dark,
+  line: palette.line.dark,
   disabled: palette.disabled.dark,
-  text: {
-    primary: palette.text.primary.dark,
-    secondary: palette.text.secondary.dark,
-    disabled: palette.text.disabled.dark,
-    hint: palette.text.hint.dark,
-    icon: palette.text.icon.dark,
-  },
-  divider: palette.divider.dark,
+  icon: palette.icon.dark,
   background: {
-    paper: palette.background.dark,
-    default: '#303030',
+    paper: palette.background.paper.dark,
+    default: palette.background.default.dark,
   },
-  fontSize: {
-    small: palette.fontSize.small,
-    default: palette.fontSize.default,
-    large: palette.fontSize.large,
+  intent: {
+    primary: palette.intent.primary.dark,
+    info: palette.intent.info.dark,
+    success: palette.intent.success.dark,
+    warning: palette.intent.warning.dark,
+    error: palette.intent.error.dark,
+    default: palette.intent.default.dark,
   },
-  action: {
-    active: palette.action.active.dark,
-    hover: palette.action.hover.dark,
-    hoverOpacity: 0.1,
-    selected: palette.action.selected.dark,
-    disabled: palette.action.disabled.dark,
-    disabledBackground: palette.action.disabledBackground.dark,
+  text: {
+    mutated: palette.text.mutated.dark,
+    default: palette.text.default.dark,
   },
 });
