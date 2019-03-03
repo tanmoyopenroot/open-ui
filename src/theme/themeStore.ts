@@ -2,8 +2,11 @@ import * as React from 'react';
 import jss from 'jss';
 import jssPresetDefault from 'jss-preset-default';
 
-import { IThemeOptions } from './createTheme';
-import createTheme, { ITheme } from 'theme/createTheme';
+import {
+  createTheme,
+  ITheme,
+  IThemeOptions,
+} from './createTheme';
 
 type TSetters = React.Dispatch<React.SetStateAction<ITheme>>;
 
