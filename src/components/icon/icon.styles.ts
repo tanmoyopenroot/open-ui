@@ -1,62 +1,39 @@
-import jss from 'jss';
+import jss, { StyleSheet } from 'jss';
 
+import { getIntent } from 'common/intent';
+import { getSize } from 'common/size';
 import { ITheme } from 'theme';
-import { Intent } from 'common/intent';
-import { Size } from 'common/size';
-
 import { IIconProps } from './props';
 
+let sheet: StyleSheet;
+
 export default (props: IIconProps) => (theme: ITheme) => {
-  const getIntent = () => {
-    if (props.disabled) {
-      return {
-        color: theme.palette.disabled,
-      };
-    }
-
-    switch (props.intent) {
-      case Intent.PRIMARY:
-        return {
-          color: theme.palette.primary,
-        };
-      case Intent.SECONDARY:
-        return {
-          color: theme.palette.secondary,
-        };
-      case Intent.ERROR:
-        return {
-          color: theme.palette.error,
-        };
-      default:
-        return {
-          color: theme.palette.colors.Black.default,
-        };
-    }
+  const styles = {
+    icon: {
+      fontSize: getSize(props.size, ['90%', '120%' , '200%']),
+      color: getIntent(props.intent, theme.palette.intent),
+      cursor: props.disabled ? 'not-allowed' : 'inherit',
+      opacity: props.disabled ? 0.5 : 1,
+    },
   };
 
-  const getSize = () => {
-    switch (props.size) {
-      case Size.SMALL:
-        return {
-          fontSize: '90%',
-        };
-      case Size.LARGE:
-        return {
-          fontSize: '200%',
-        };
-      default:
-        return {
-          fontSize: '120%',
-        };
+  const createSheet = () => {
+    if (sheet && sheet.classes) {
+      removeSheet();
     }
+    sheet = jss
+      .createStyleSheet(styles);
+    sheet.attach();
+    return sheet.classes;
   };
 
-  return jss
-    .createStyleSheet({
-      icon: {
-        ...getIntent(),
-        ...getSize(),
-      },
-    })
-    .attach();
+  const removeSheet = () => {
+    sheet.detach();
+    jss.removeStyleSheet(sheet);
+  };
+
+  return {
+    createSheet,
+    removeSheet,
+  };
 };

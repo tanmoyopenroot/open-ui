@@ -1,5 +1,8 @@
 import { IProps } from 'common/props';
-import { TIconName } from 'common/icons';
+import {
+  IconList,
+  TIconName,
+} from 'common/icons';
 import {
   Intent,
   TIntent,
@@ -12,7 +15,7 @@ import {
 export interface IIcon<P = {}> extends React.FunctionComponent<P> {
   Intent: TIntent;
   Size: TSize;
-  Value: TIconName;
+  Type: TIconName;
 }
 
 export interface IIconProps extends IProps {
@@ -20,6 +23,6 @@ export interface IIconProps extends IProps {
   size?: Size;
   intent?: Intent;
   disabled?: boolean;
-  icon?: string;
+  icon?: IconList;
   elementRef?: (ref: HTMLElement | null) => any;
 }

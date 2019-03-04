@@ -10,7 +10,7 @@ const setup = () => {
   createThemeStore();
 
   const props:IIconProps = {
-    icon: Icon.Value.alarmClock,
+    icon: Icon.Type.alarmClock,
     intent: Icon.Intent.ERROR,
     disabled: true,
     size: Icon.Size.LARGE,
