@@ -9,7 +9,7 @@ import {
 
 const textPalette: ITextPalette = {
   mutated: {
-    light: '#8898aa',
+    light: '#fff',
     dark: colors.White.default,
   },
   default: {
