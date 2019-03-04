@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classnames from 'classnames';
 
 import { DISPLAY_NAME_PREFIX } from 'common/info';
 import { useThemeStore } from 'theme';
@@ -18,11 +19,34 @@ const card: ICard<ICardProps> = (props) => {
   } = props;
 
   const [theme] = useThemeStore();
-  const { classes } = cardStyles(props)(theme);
+  const [classes, setClasses] = React.useState(() => {
+    const { createSheet } = cardStyles(props)(theme);
+    return createSheet();
+  });
+
+  React.useEffect(
+    () => {
+      const {
+        createSheet,
+        removeSheet,
+      } = cardStyles(props)(theme);
+
+      setClasses(createSheet());
+      return () => {
+        removeSheet();
+      };
+    },
+    [theme, props],
+  );
+
+  const combinedClasses = classnames(
+    className,
+    classes.card,
+  );
 
   return (
     <div
-      className={`${classes.card} ${className}`}
+      className={combinedClasses}
       {...htmlProps}
     />
   );
@@ -32,7 +56,6 @@ card.displayName = `${DISPLAY_NAME_PREFIX}.Card`;
 card.Elevation = Elevation;
 
 card.defaultProps = {
-  className: '',
   elevation: Elevation.ZERO,
 };
 
