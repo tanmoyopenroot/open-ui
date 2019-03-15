@@ -17,12 +17,13 @@ import {
 const button: IButton<IButtonProps> = (props) => {
   const {
     className,
+    circular,
     disabled,
     icon,
     size,
-    intent,
     type,
     children,
+    onClick,
   } = props;
 
   const [theme] = useThemeStore();
@@ -46,6 +47,12 @@ const button: IButton<IButtonProps> = (props) => {
     [theme, props],
   );
 
+  const handleClick = (event: React.FormEvent<HTMLButtonElement>) => {
+    if (!disabled) {
+      onClick(event);
+    }
+  };
+
   const combinedClasses = classnames(
     className,
     classes.button,
@@ -55,12 +62,13 @@ const button: IButton<IButtonProps> = (props) => {
     <button
       className={combinedClasses}
       type={type}
+      onClick={handleClick}
     >
       <Icon
         icon={icon}
         size={size}
       />
-      {children}
+      {!circular && children}
     </button>
   );
 };

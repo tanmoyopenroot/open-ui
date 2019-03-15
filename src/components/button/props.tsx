@@ -1,3 +1,4 @@
+import * as React from 'react';
 import {
   Intent,
   TIntent,
@@ -30,14 +31,16 @@ export interface IButton<P = {}> extends React.FunctionComponent<P> {
   Icon: TIconName;
 }
 
-export interface IButtonProps extends IProps, HTMLButtonProps {
+export interface IButtonProps extends IProps {
   size?: Size;
   type?: ButtonType;
   intent?: Intent;
   icon?: IconList;
+  disabled?: boolean;
   outlined?: boolean;
   iconRight?: boolean;
-  elementRef?: (ref: HTMLElement | null) => any;
+  circular?: boolean;
+  onClick: (event: React.FormEvent<HTMLButtonElement>) => void;
 }
 
 export interface IButtonStyle {
