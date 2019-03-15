@@ -18,8 +18,10 @@ const props:IButtonProps = {
   intent: Button.Intent.PRIMARY,
   size: Button.Size.DEFAULT,
   icon: Button.Icon.alarmClock,
+  circular: true,
   // outlined: true,
-  disabled: true,
+  // disabled: true,
+  onClick: (event) => { console.log(event); },
 };
 
 const stories = storiesOf('Button', module);
