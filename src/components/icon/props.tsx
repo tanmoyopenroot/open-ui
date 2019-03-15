@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { IProps } from 'common/props';
 import {
   IconList,
@@ -24,5 +25,5 @@ export interface IIconProps extends IProps {
   intent?: Intent;
   disabled?: boolean;
   icon?: IconList;
-  elementRef?: (ref: HTMLElement | null) => any;
+  onClick?: (event: React.MouseEvent<HTMLElement>) => void;
 }

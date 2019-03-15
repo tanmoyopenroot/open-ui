@@ -17,6 +17,8 @@ const icon: IIcon<IIconProps> = (props) => {
   const {
     icon,
     className,
+    disabled,
+    onClick,
   } = props;
 
   const [theme] = useThemeStore();
@@ -40,6 +42,12 @@ const icon: IIcon<IIconProps> = (props) => {
     [theme, props],
   );
 
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    if (!disabled && onClick) {
+      onClick(event);
+    }
+  };
+
   const combinedClasses = classnames(
     icon,
     className,
@@ -49,6 +57,7 @@ const icon: IIcon<IIconProps> = (props) => {
   return (
     <span
       className={combinedClasses}
+      onClick={handleClick}
     />
   );
 };
