@@ -13,7 +13,7 @@ const textPalette: ITextPalette = {
     dark: colors.White.default,
   },
   default: {
-    light: '#525f7f',
+    light: '#212529',
     dark: 'rgba(255, 255, 255, 0.7)',
   },
 };
