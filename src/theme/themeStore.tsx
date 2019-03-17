@@ -12,7 +12,7 @@ type TSetters = React.Dispatch<React.SetStateAction<ITheme>>;
 
 interface IStore {
   state: ITheme;
-  setThemeState: Function;
+  setThemeState: (value: ITheme) => void;
   setters: TSetters[];
 }
 
@@ -34,7 +34,10 @@ export const createThemeStore = (options?: IThemeOptions) => {
   store.setThemeState = store.setThemeState.bind(store);
 };
 
-export const useThemeStore = (): [ ITheme, Function ] => {
+export const useThemeStore = (): [
+  ITheme,
+  (value: ITheme) => void,
+] => {
   const [state, set] = React.useState(store.state);
 
   if (!store.setters.includes(set)) {
