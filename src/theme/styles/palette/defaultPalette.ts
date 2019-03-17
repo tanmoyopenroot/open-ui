@@ -21,27 +21,27 @@ const textPalette: ITextPalette = {
 const intentPalette: IIntentPalette = {
   primary: {
     light: '#5e72e4',
-    dark: colors.Indigo[700],
+    dark: '#5e72e4',
   },
   info: {
     light: '#11cdef',
-    dark: colors.Pink.A700,
+    dark: '#11cdef',
   },
   success: {
     light: '#2dce89',
-    dark: 'rgba(255, 255, 255, 0.5)',
+    dark: '#2dce89',
   },
   warning: {
     light: '#fb6340',
-    dark: colors.Red[700],
+    dark: '#fb6340',
   },
   error: {
     light: '#f5365c',
-    dark: colors.Red[700],
+    dark: '#f5365c',
   },
   default: {
     light: '#212529',
-    dark: 'rgba(255, 255, 255, 0.5)',
+    dark: '#212529',
   },
 };
 
