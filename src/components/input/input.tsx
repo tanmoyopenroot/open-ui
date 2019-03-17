@@ -2,11 +2,16 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 import { DISPLAY_NAME_PREFIX } from 'common/info';
-import { useThemeStore } from 'theme';
 import { Intent } from 'common/intent';
 import { Size } from 'common/size';
-
-import inputStyles from './input.styles';
+import {
+  useThemeStore,
+  useJSS,
+} from 'theme';
+import {
+  getInitialStyles,
+  getUpdatedStyles,
+} from './input.styles';
 import {
   Type,
   IInput,
@@ -27,30 +32,23 @@ const input: IInput<IInputProps> = (props) => {
   } = props;
 
   const [theme] = useThemeStore();
-  const [classes, setClasses] = React.useState(() => {
-    const { createSheet } = inputStyles(props)(theme);
-    return createSheet();
-  });
-
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    if (!disabled) {
-      onChange(event, event.currentTarget.value);
-    }
-  };
+  const [classes, updateSheet] = useJSS(() => getInitialStyles());
 
   React.useEffect(
     () => {
-      const {
-        createSheet,
-        removeSheet,
-      } = inputStyles(props)(theme);
-
-      setClasses(createSheet());
-      return () => {
-        removeSheet();
-      };
+      const updatedStyles = getUpdatedStyles(props)(theme);
+      updateSheet(updatedStyles);
     },
     [theme, props],
+  );
+
+  const handleChange = React.useCallback(
+    (event: React.FormEvent<HTMLInputElement>) => {
+      if (!disabled) {
+        onChange(event, event.currentTarget.value);
+      }
+    },
+    [disabled],
   );
 
   const wrapper = classnames(
