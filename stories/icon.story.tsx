@@ -2,19 +2,11 @@ import * as React from 'react';
 import { storiesOf } from '@storybook/react';
 
 import {
-  StoryWrapper,
-  IStoryWrapperProps,
-} from './wrapper';
-import {
   Icon,
   IIconProps,
   Toggle,
   Story,
 } from '../src';
-
-const wrapperProps:IStoryWrapperProps = {
-  width: '30%',
-};
 
 interface IIconExamplePState {
   disabled: boolean;

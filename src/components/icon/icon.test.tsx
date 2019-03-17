@@ -14,6 +14,7 @@ const setup = () => {
     intent: Icon.Intent.ERROR,
     disabled: true,
     size: Icon.Size.LARGE,
+    onClick: (event) => { console.log(event); },
   };
 
   const wrapper = enzyme.mount(
@@ -42,5 +43,6 @@ describe('<Card />', () => {
     expect(typeof wrapper.prop('intent')).toBe('string');
     expect(typeof wrapper.prop('disabled')).toBe('boolean');
     expect(typeof wrapper.prop('size')).toBe('string');
+    expect(typeof wrapper.prop('onClick')).toBe('function');
   });
 });
