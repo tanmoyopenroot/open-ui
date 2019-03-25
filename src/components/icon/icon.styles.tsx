@@ -5,22 +5,14 @@ import { getSize } from 'common/size';
 import { ITheme } from 'theme';
 import { IIconProps } from './props';
 
-export interface IStyleData {
-  icon: {
-    fontSize: string;
-    color: string;
-    cursor: string;
-    opacity: number;
-  };
+export interface IIconStyle {
+  icon: object;
 }
 
 export const getInitialStyles = (): any => ({
-  icon: {
-    fontSize: (data: IStyleData) => data.icon.fontSize,
-    color: (data: IStyleData) => data.icon.color,
-    cursor: (data: IStyleData) => data.icon.cursor,
-    opacity: (data: IStyleData) => data.icon.opacity,
-  },
+  icon: (data: IIconStyle) => ({
+    ...data.icon,
+  }),
 });
 
 export const getUpdatedStyles = (props: IIconProps) => (theme: ITheme): Styles => ({
