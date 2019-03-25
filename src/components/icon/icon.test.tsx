@@ -35,7 +35,10 @@ describe('<Card />', () => {
   test('should render <Card /> with its child', () => {
     expect(wrapper.exists()).toBe(true);
     expect(wrapper).toHaveLength(1);
-    expect(wrapper.children().children().exists()).toBeFalsy();
+  });
+
+  test('should have no children', () => {
+    expect(wrapper.props().children).toBeFalsy();
   });
 
   test('check prop types', () => {

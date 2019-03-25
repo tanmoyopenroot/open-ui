@@ -17,9 +17,17 @@ export const getInitialStyles = (): any => ({
 
 export const getUpdatedStyles = (props: IIconProps) => (theme: ITheme): Styles => ({
   icon: {
-    fontSize: getSize(props.size, ['75%', '120%' , '200%']),
-    color: getIntent(props.intent, theme.palette.intent),
     cursor: props.disabled && 'not-allowed' || props.onClick && 'pointer' || 'inherit',
-    opacity: props.disabled ? 0.5 : 1,
+    fontSize: getSize(
+      props.size,
+      ['75%', '120%' , '200%'],
+    ),
+    color: getIntent(
+      props.intent,
+      theme.palette.intent,
+    ),
+    opacity: props.disabled
+      ? 0.5
+      : 1,
   },
 });
