@@ -32,12 +32,10 @@ const input: IInput<IInputProps> = (props) => {
   } = props;
 
   const [theme] = useThemeStore();
-  const [classes, updateSheet] = useJSS(() => getInitialStyles());
-
-  React.useEffect(
-    () => {
-      const updatedStyles = getUpdatedStyles(props)(theme);
-      updateSheet(updatedStyles);
+  const [classes] = useJSS(
+    {
+      initialStyles: getInitialStyles(),
+      updatedStyles: getUpdatedStyles(props)(theme),
     },
     [theme, props],
   );
