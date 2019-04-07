@@ -8,10 +8,7 @@ import {
   useThemeStore,
   useJSS,
 } from 'theme';
-import {
-  getInitialStyles,
-  getUpdatedStyles,
-} from './input.styles';
+import inputStyles from './input.styles';
 import {
   Type,
   IInput,
@@ -33,10 +30,7 @@ const input: IInput<IInputProps> = (props) => {
 
   const [theme] = useThemeStore();
   const [classes] = useJSS(
-    {
-      initialStyles: getInitialStyles(),
-      updatedStyles: getUpdatedStyles(props)(theme),
-    },
+    inputStyles(props)(theme),
     [theme, props],
   );
 

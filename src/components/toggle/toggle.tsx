@@ -2,9 +2,11 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 import { DISPLAY_NAME_PREFIX } from 'common/info';
-import { useThemeStore } from 'theme';
 import { Size } from 'common/size';
-
+import {
+  useThemeStore,
+  useJSS,
+} from 'theme';
 import toggleStyles from './toggle.styles';
 import {
   IToggle,
@@ -24,10 +26,10 @@ const toggle: IToggle<IToggleProps> = (props) => {
   } = props;
 
   const [theme] = useThemeStore();
-  const [classes, setClasses] = React.useState(() => {
-    const { createSheet } = toggleStyles(props)(theme);
-    return createSheet();
-  });
+  const [classes] = useJSS(
+    toggleStyles(props)(theme),
+    [theme, props],
+  );
 
   const [checked, setChecked] = React.useState(() => {
     return defaultChecked || false;
@@ -39,21 +41,6 @@ const toggle: IToggle<IToggleProps> = (props) => {
       onChange(!checked);
     }
   };
-
-  React.useEffect(
-    () => {
-      const {
-        createSheet,
-        removeSheet,
-      } = toggleStyles(props)(theme);
-
-      setClasses(createSheet());
-      return () => {
-        removeSheet();
-      };
-    },
-    [theme, props],
-  );
 
   const combinedClasses = classnames(
     className,
