@@ -9,10 +9,7 @@ import {
   useThemeStore,
   useJSS,
 } from 'theme';
-import {
-  getInitialStyles,
-  getUpdatedStyles,
-} from './icon.styles';
+import iconStyles from './icon.styles';
 import {
   IIcon,
   IIconProps,
@@ -28,10 +25,7 @@ const icon: IIcon<IIconProps> = (props) => {
 
   const [theme] = useThemeStore();
   const [classes] = useJSS(
-    {
-      initialStyles: getInitialStyles(),
-      updatedStyles: getUpdatedStyles(props)(theme),
-    },
+    iconStyles(props)(theme),
     [theme, props],
   );
 
