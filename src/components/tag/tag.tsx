@@ -4,9 +4,11 @@ import classnames from 'classnames';
 import { DISPLAY_NAME_PREFIX } from 'common/info';
 import { Intent } from 'common/intent';
 import { Size } from 'common/size';
-import { useThemeStore } from 'theme';
 import { Icon } from 'components';
-
+import {
+  useThemeStore,
+  useJSS,
+} from 'theme';
 import tagStyles from './tag.styles';
 import {
   ITag,
@@ -24,10 +26,10 @@ const tag: ITag<ITagProps> = (props) => {
   } = props;
 
   const [theme] = useThemeStore();
-  const [classes, setClasses] = React.useState(() => {
-    const { createSheet } = tagStyles(props)(theme);
-    return createSheet();
-  });
+  const [classes] = useJSS(
+    tagStyles(props)(theme),
+    [theme, props],
+  );
 
   const handleClose = (event: React.MouseEvent<HTMLElement>) => {
     if (!disabled && onClose) {
@@ -39,6 +41,21 @@ const tag: ITag<ITagProps> = (props) => {
     className,
     classes.wrapper,
   );
+
+  {onClose &&
+    (
+      <div
+        className={classes.actions}
+      >
+        <Icon
+          onClick={handleClose}
+          icon={Icon.Type.close}
+          size={size}
+          intent={intent}
+        />
+      </div>
+    )
+  }
 
   return (
     <div
@@ -60,7 +77,7 @@ const tag: ITag<ITagProps> = (props) => {
             intent={intent}
           />
         </div>
-       )}
+      )}
     </div>
   );
 };
