@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { DISPLAY_NAME_PREFIX } from 'common/info';
-
+import { useJSS } from 'theme';
 import storyStyles from './story.styles';
 import { IStoryProps } from './props';
 
@@ -11,30 +11,13 @@ const story: React.FunctionComponent<IStoryProps> = (props) => {
     children,
   } = props;
 
-  const [classes, setClasses] = React.useState(() => {
-    const { createSheet } = storyStyles();
-    return createSheet();
-  });
-
-  React.useEffect(
-    () => {
-      const {
-        createSheet,
-        removeSheet,
-      } = storyStyles();
-
-      setClasses(createSheet());
-      return () => {
-        removeSheet();
-      };
-    },
-    [props],
+  const [classes] = useJSS(
+    storyStyles(),
+    [],
   );
 
   return (
-    <div
-      className={classes.story}
-    >
+    <div>
       <div
         className={classes.display}
       >
