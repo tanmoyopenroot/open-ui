@@ -2,9 +2,11 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 import { DISPLAY_NAME_PREFIX } from 'common/info';
-import { useThemeStore } from 'theme';
 import { Elevation } from 'common/elevation';
-
+import {
+  useThemeStore,
+  useJSS,
+} from 'theme';
 import cardStyles from './card.styles';
 import {
   ICard,
@@ -19,23 +21,8 @@ const card: ICard<ICardProps> = (props) => {
   } = props;
 
   const [theme] = useThemeStore();
-  const [classes, setClasses] = React.useState(() => {
-    const { createSheet } = cardStyles(props)(theme);
-    return createSheet();
-  });
-
-  React.useEffect(
-    () => {
-      const {
-        createSheet,
-        removeSheet,
-      } = cardStyles(props)(theme);
-
-      setClasses(createSheet());
-      return () => {
-        removeSheet();
-      };
-    },
+  const [classes] = useJSS(
+    cardStyles(props)(theme),
     [theme, props],
   );
 
