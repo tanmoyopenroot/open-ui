@@ -2,11 +2,14 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 import { DISPLAY_NAME_PREFIX } from 'common/info';
-import { useThemeStore } from 'theme';
 import { Intent } from 'common/intent';
 import { Size } from 'common/size';
 import { IconList } from 'common/icons';
 import { Icon } from 'components';
+import {
+  useThemeStore,
+  useJSS,
+} from 'theme';
 import buttonStyles from './button.styles';
 import {
   IButton,
@@ -27,31 +30,19 @@ const button: IButton<IButtonProps> = (props) => {
   } = props;
 
   const [theme] = useThemeStore();
-  const [classes, setClasses] = React.useState(() => {
-    const { createSheet } = buttonStyles(props)(theme);
-    return createSheet();
-  });
-
-  React.useEffect(
-    () => {
-      const {
-        createSheet,
-        removeSheet,
-      } = buttonStyles(props)(theme);
-
-      setClasses(createSheet());
-      return () => {
-        removeSheet();
-      };
-    },
+  const [classes] = useJSS(
+    buttonStyles(props)(theme),
     [theme, props],
   );
 
-  const handleClick = (event: React.FormEvent<HTMLButtonElement>) => {
-    if (!disabled) {
-      onClick(event);
-    }
-  };
+  const handleClick = React.useCallback(
+    (event: React.FormEvent<HTMLButtonElement>) => {
+      if (!disabled) {
+        onClick(event);
+      }
+    },
+    [disabled, onClick],
+  );
 
   const combinedClasses = classnames(
     className,
