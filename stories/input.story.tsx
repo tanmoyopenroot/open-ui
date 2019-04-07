@@ -22,17 +22,19 @@ const LEFT = () => (
   />
 );
 
+const handleClick = (event: React.MouseEvent<HTMLElement>) => { console.log(event); };
+
 const RIGHT = () => (
   <Icon
     icon={Icon.Type.close}
     intent={Icon.Intent.DEFAULT}
+    onClick={handleClick}
   />
 );
 
 const inputProps:IInputProps = {
   leftElement: <LEFT />,
   rightElement: <RIGHT />,
-  disabled: true,
   placeholder: 'Type something...',
   intent: Input.Intent.SUCCESS,
   size: Input.Size.DEFAULT,

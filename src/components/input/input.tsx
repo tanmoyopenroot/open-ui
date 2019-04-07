@@ -53,7 +53,13 @@ const input: IInput<IInputProps> = (props) => {
     <div
       className={wrapper}
     >
-      {leftElement && <div className={classes.leftElement}>{leftElement}</div>}
+      {leftElement && (
+        <div
+          className={classes.leftElement}
+        >
+          {leftElement}
+        </div>
+      )}
       <input
         className={classes.input}
         placeholder={placeholder}
@@ -62,7 +68,13 @@ const input: IInput<IInputProps> = (props) => {
         onChange={handleChange}
         type={type}
       />
-      {rightElement && <div className={classes.rightElement}>{rightElement}</div>}
+      {rightElement && (
+        <div
+          className={classes.rightElement}
+        >
+          {rightElement}
+        </div>
+      )}
     </div>
   );
 };
