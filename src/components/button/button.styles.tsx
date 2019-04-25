@@ -1,18 +1,24 @@
-import { ITheme } from 'theme';
-import { IButtonProps } from './props';
-import { getIntent } from 'common/intent';
-import { getSize } from 'common/size';
+import { css } from 'emotion';
 
-export default (props: IButtonProps) => (theme: ITheme): Record<string, object> => ({
-  button: {
-    position: 'relative' as 'relative',
+import { ITheme } from '../../theme';
+import { IButtonProps } from './props';
+import { getIntent } from '../../common/intent';
+import { getSize } from '../../common/size';
+
+type IButtonStyles = {
+  button: string;
+};
+
+export default (props: IButtonProps, theme: ITheme): IButtonStyles => ({
+  button: css({
+    position: 'relative',
     transition: 'all .15s ease',
     letterSpacing: '.025em',
     border: '1px solid transparent',
     borderColor: getIntent(props.intent, theme.palette.intent),
     fontSize: getSize(
       props.size,
-      ['.75rem', '.875rem', '.875rem']
+      ['.75rem', '.875rem', '.875rem'],
     ),
     borderRadius: props.circular
       ? '100%'
@@ -57,5 +63,5 @@ export default (props: IButtonProps) => (theme: ITheme): Record<string, object> 
         ? getIntent(props.intent, theme.palette.intent)
         : theme.palette.text.mutated,
     },
-  },
+  }),
 });

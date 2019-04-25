@@ -1,19 +1,27 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import { DISPLAY_NAME_PREFIX } from 'common/info';
-import { Intent } from 'common/intent';
-import { Size } from 'common/size';
+import { DISPLAY_NAME_PREFIX } from '../../common/info';
+import { Intent } from '../../common/intent';
+import { Size } from '../../common/size';
 import {
   useThemeStore,
   useJSS,
-} from 'theme';
+} from '../../theme';
 import inputStyles from './input.styles';
 import {
-  Type,
+  InputType,
   IInput,
   IInputProps,
+  DefaultProps,
 } from './props';
+
+const displayName: string = `${DISPLAY_NAME_PREFIX}.Input`;
+const defaultProps: DefaultProps = {
+  intent: Intent.DEFAULT,
+  size: Size.DEFAULT,
+  type: InputType.TEXT,
+};
 
 const input: IInput<IInputProps> = (props) => {
   const {
@@ -30,7 +38,7 @@ const input: IInput<IInputProps> = (props) => {
 
   const [theme] = useThemeStore();
   const [classes] = useJSS(
-    inputStyles(props)(theme),
+    inputStyles(props, theme),
     [theme, props],
   );
 
@@ -49,17 +57,21 @@ const input: IInput<IInputProps> = (props) => {
     { [classes.elevated]: elevated },
   );
 
+  const leftNode = (
+    <div className={classes.leftElement}>
+      {leftElement}
+    </div>
+  );
+
+  const rightNode = (
+    <div className={classes.rightElement}>
+      {rightElement}
+    </div>
+  );
+
   return (
-    <div
-      className={wrapper}
-    >
-      {leftElement && (
-        <div
-          className={classes.leftElement}
-        >
-          {leftElement}
-        </div>
-      )}
+    <div className={wrapper}>
+      {leftElement && leftNode}
       <input
         className={classes.input}
         placeholder={placeholder}
@@ -68,27 +80,17 @@ const input: IInput<IInputProps> = (props) => {
         onChange={handleChange}
         type={type}
       />
-      {rightElement && (
-        <div
-          className={classes.rightElement}
-        >
-          {rightElement}
-        </div>
-      )}
+      {rightElement && rightNode}
     </div>
   );
 };
 
-input.displayName = `${DISPLAY_NAME_PREFIX}.Input`;
+input.displayName = displayName;
+input.defaultProps = defaultProps;
+
 input.Intent = Intent;
 input.Size = Size;
-input.Type = Type;
-
-input.defaultProps = {
-  intent: Intent.DEFAULT,
-  size: Size.DEFAULT,
-  type: Type.TEXT,
-};
+input.Type = InputType;
 
 export {
   input as Input,

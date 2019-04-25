@@ -1,14 +1,16 @@
-import { IProps } from 'common/props';
+import * as React from 'react';
+
+import { IProps } from '../../common/props';
 import {
   Intent,
   TIntent,
-} from 'common/intent';
+} from '../../common/intent';
 import {
   Size,
   TSize,
-} from 'common/size';
+} from '../../common/size';
 
-export enum Type {
+export enum InputType {
   TEXT = 'text',
   NUMBER = 'number',
   EMAIL = 'email',
@@ -16,23 +18,26 @@ export enum Type {
   PASSWORD = 'password',
 }
 
-export type TType = typeof Type;
+export type TInputType = typeof InputType;
 
 export interface IInput<P = {}> extends React.FunctionComponent<P> {
   Intent: TIntent;
   Size: TSize;
-  Type: TType;
+  Type: TInputType;
 }
 
-export interface IInputProps extends IProps {
+export interface DefaultProps {
+  intent: Intent;
+  size: Size;
+  type: InputType;
+}
+
+export interface IInputProps extends IProps, Partial<DefaultProps> {
   children?: never;
-  size?: Size;
-  intent?: Intent;
   disabled?: boolean;
   elevated?: boolean;
   placeholder?: string;
   defaultValue?: string;
-  type?: Type;
   leftElement?: React.ReactNode;
   rightElement?: React.ReactNode;
   onChange: (event: React.FormEvent<HTMLInputElement>, value: string) => void;

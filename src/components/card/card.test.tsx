@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as enzyme from 'enzyme';
 
-import { createThemeStore } from 'theme';
+import { createThemeStore } from '../../theme';
 
 import { Card } from './card';
 import { ICardProps } from './props';

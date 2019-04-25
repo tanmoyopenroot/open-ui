@@ -1,58 +1,28 @@
 import * as React from 'react';
-import jss, { Styles, Classes } from 'jss';
 
-interface IStyleObject {
-  initialStyles: Styles;
-  updatedStyles: Styles;
-}
-
-export const useJSS = (
-  styleObject: IStyleObject,
-  inputs: any[],
-): [Classes, (updatedStyles: any) => void] => {
+const useJSS = <T extends {}>(styles: T, inputs: object[]): [T] => {
   const [sheet, setSheet] = React.useState(() => {
-    const { initialStyles, updatedStyles } = styleObject;
-    const sheet = jss
-      .createStyleSheet(initialStyles, { link: true })
-      .attach();
-
-    sheet.update(updatedStyles);
-
-    return sheet;
+    console.log('create');
+    return styles;
   });
 
-  const removeSheet = () => {
-    if (sheet) {
-      sheet.detach();
-      jss.removeStyleSheet(sheet);
-    }
+  const updateSheet = () => {
+    setSheet(styles);
   };
-
-  const updateSheet = (updatedStyles: Styles) => {
-    if (sheet) {
-      console.log('update');
-      sheet.update(updatedStyles);
-    }
-  };
-
-  React.useEffect(
-    () => () => {
-      console.log('remove');
-      removeSheet();
-    },
-    [],
-  );
 
   React.useEffect(
     () => {
-      const { updatedStyles } = styleObject;
-      updateSheet(updatedStyles);
+      console.log('update');
+      updateSheet();
     },
     inputs,
   );
 
   return [
-    sheet.classes,
-    updateSheet,
+    sheet,
   ];
+};
+
+export {
+  useJSS,
 };

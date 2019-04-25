@@ -1,19 +1,27 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import { DISPLAY_NAME_PREFIX } from 'common/info';
-import { IconList } from 'common/icons';
-import { Intent } from 'common/intent';
-import { Size } from 'common/size';
+import { DISPLAY_NAME_PREFIX } from '../../common/info';
+import { IconList } from '../../common/icons';
+import { Intent } from '../../common/intent';
+import { Size } from '../../common/size';
 import {
   useThemeStore,
   useJSS,
-} from 'theme';
+} from '../../theme';
 import iconStyles from './icon.styles';
 import {
   IIcon,
   IIconProps,
+  DefaultProps,
 } from './props';
+
+const displayName: string = `${DISPLAY_NAME_PREFIX}.Icon`;
+const defaultProps: DefaultProps = {
+  intent: Intent.DEFAULT,
+  size: Size.DEFAULT,
+  disabled: false,
+};
 
 const icon: IIcon<IIconProps> = (props) => {
   const {
@@ -25,7 +33,7 @@ const icon: IIcon<IIconProps> = (props) => {
 
   const [theme] = useThemeStore();
   const [classes] = useJSS(
-    iconStyles(props)(theme),
+    iconStyles(props, theme),
     [theme, props],
   );
 
@@ -52,15 +60,12 @@ const icon: IIcon<IIconProps> = (props) => {
   );
 };
 
-icon.displayName = `${DISPLAY_NAME_PREFIX}.Icon`;
+icon.displayName = displayName;
+icon.defaultProps = defaultProps;
+
 icon.Intent = Intent;
 icon.Size = Size;
 icon.Type = IconList;
-
-icon.defaultProps = {
-  intent: Intent.DEFAULT,
-  size: Size.DEFAULT,
-};
 
 export {
   icon as Icon,

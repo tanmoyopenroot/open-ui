@@ -1,20 +1,18 @@
 import * as React from 'react';
+
+import { IProps } from '../../common/props';
 import {
   Intent,
   TIntent,
-} from 'common/intent';
-import {
-  IProps,
-  HTMLButtonProps,
-} from 'common/props';
+} from '../../common/intent';
 import {
   Size,
   TSize,
-} from 'common/size';
+} from '../../common/size';
 import {
   IconList,
   TIconName,
-} from 'common/icons';
+} from '../../common/icons';
 
 export enum ButtonType {
   DEFAULT = 'button',
@@ -31,18 +29,17 @@ export interface IButton<P = {}> extends React.FunctionComponent<P> {
   Icon: TIconName;
 }
 
-export interface IButtonProps extends IProps {
-  size?: Size;
-  type?: ButtonType;
-  intent?: Intent;
+export interface DefaultProps {
+  intent: Intent;
+  size: Size;
+  type: ButtonType;
+}
+
+export interface IButtonProps extends IProps, Partial<DefaultProps> {
   icon?: IconList;
   disabled?: boolean;
   outlined?: boolean;
   iconRight?: boolean;
   circular?: boolean;
   onClick: (event: React.FormEvent<HTMLButtonElement>) => void;
-}
-
-export interface IButtonStyle {
-  button: React.CSSProperties;
 }

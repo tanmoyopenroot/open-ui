@@ -1,8 +1,14 @@
-import { ITheme } from 'theme';
+import { css } from 'emotion';
+
+import { ITheme } from '../../theme';
 import { ICardProps } from './props';
 
-export default (props: ICardProps) => (theme: ITheme): Record<string, object> => ({
-  card: {
+type ICardStyles = {
+  card: string;
+};
+
+export default (props: ICardProps, theme: ITheme): ICardStyles => ({
+  card: css({
     position: 'relative' as 'relative',
     boxShadow: theme.elevations[props.elevation!],
     padding: '1.5rem',
@@ -11,5 +17,5 @@ export default (props: ICardProps) => (theme: ITheme): Record<string, object> =>
     wordWrap: 'break-word' as 'break-word',
     border: '.0625rem solid rgba(0,0,0,.05)',
     transition: 'all .15s ease',
-  },
+  }),
 });

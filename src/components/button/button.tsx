@@ -1,21 +1,29 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import { DISPLAY_NAME_PREFIX } from 'common/info';
-import { Intent } from 'common/intent';
-import { Size } from 'common/size';
-import { IconList } from 'common/icons';
-import { Icon } from 'components';
+import { DISPLAY_NAME_PREFIX } from '../../common/info';
+import { Intent } from '../../common/intent';
+import { Size } from '../../common/size';
+import { IconList } from '../../common/icons';
+import { Icon } from '../icon';
 import {
   useThemeStore,
   useJSS,
-} from 'theme';
+} from '../../theme';
 import buttonStyles from './button.styles';
 import {
   IButton,
   IButtonProps,
+  DefaultProps,
   ButtonType,
 } from './props';
+
+const displayName: string = `${DISPLAY_NAME_PREFIX}.Button`;
+const defaultProps: DefaultProps = {
+  intent: Intent.DEFAULT,
+  size: Size.DEFAULT,
+  type: ButtonType.DEFAULT,
+};
 
 const button: IButton<IButtonProps> = (props) => {
   const {
@@ -31,7 +39,7 @@ const button: IButton<IButtonProps> = (props) => {
 
   const [theme] = useThemeStore();
   const [classes] = useJSS(
-    buttonStyles(props)(theme),
+    buttonStyles(props, theme),
     [theme, props],
   );
 
@@ -64,17 +72,13 @@ const button: IButton<IButtonProps> = (props) => {
   );
 };
 
-button.displayName = `${DISPLAY_NAME_PREFIX}.Button`;
+button.displayName = displayName;
+button.defaultProps = defaultProps;
+
 button.Intent = Intent;
 button.Size = Size;
 button.Type = ButtonType;
 button.Icon = IconList;
-
-button.defaultProps = {
-  intent: Intent.DEFAULT,
-  size: Size.DEFAULT,
-  type: ButtonType.DEFAULT,
-};
 
 export {
   button as Button,

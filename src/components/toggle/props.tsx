@@ -1,12 +1,10 @@
 import * as React from 'react';
-import {
-  IProps,
-  HTMLInputProps,
-} from 'common/props';
+
+import { IProps } from '../../common/props';
 import {
   Size,
   TSize,
-} from 'common/size';
+} from '../../common/size';
 
 export enum ToggleType {
   CHECKBOX = 'checkbox',
@@ -20,12 +18,15 @@ export interface IToggle<P = {}> extends React.FunctionComponent<P> {
   Type: TToggleType;
 }
 
-export interface IToggleProps extends IProps {
+export interface DefaultProps {
+  size: Size;
+  type: ToggleType;
+}
+
+export interface IToggleProps extends IProps, Partial<DefaultProps> {
   defaultChecked?: boolean;
   disabled?: boolean;
   label?: string;
-  size?: Size;
-  type?: ToggleType;
   name?: string;
   onChange: (value: boolean) => void;
 }

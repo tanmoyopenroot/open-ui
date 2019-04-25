@@ -1,17 +1,23 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import { DISPLAY_NAME_PREFIX } from 'common/info';
-import { Elevation } from 'common/elevation';
+import { DISPLAY_NAME_PREFIX } from '../../common/info';
+import { Elevation } from '../../common/elevation';
 import {
   useThemeStore,
   useJSS,
-} from 'theme';
+} from '../../theme';
 import cardStyles from './card.styles';
 import {
   ICard,
   ICardProps,
+  DefaultProps,
 } from './props';
+
+const displayName: string = `${DISPLAY_NAME_PREFIX}.Card`;
+const defaultProps: DefaultProps = {
+  elevation: Elevation.ZERO,
+};
 
 const card: ICard<ICardProps> = (props) => {
   const {
@@ -22,7 +28,7 @@ const card: ICard<ICardProps> = (props) => {
 
   const [theme] = useThemeStore();
   const [classes] = useJSS(
-    cardStyles(props)(theme),
+    cardStyles(props, theme),
     [theme, props],
   );
 
@@ -39,12 +45,10 @@ const card: ICard<ICardProps> = (props) => {
   );
 };
 
-card.displayName = `${DISPLAY_NAME_PREFIX}.Card`;
-card.Elevation = Elevation;
+card.displayName = displayName;
+card.defaultProps = defaultProps;
 
-card.defaultProps = {
-  elevation: Elevation.ZERO,
-};
+card.Elevation = Elevation;
 
 export {
   card as Card,

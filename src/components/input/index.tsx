@@ -1,2 +1,4 @@
-export * from './props';
-export * from './input';
+import { IInputProps } from './props';
+
+export type IInputProps = IInputProps;
+export { Input } from './input';

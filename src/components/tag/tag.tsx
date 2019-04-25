@@ -1,19 +1,27 @@
 import * as React from 'react';
 import classnames from 'classnames';
 
-import { DISPLAY_NAME_PREFIX } from 'common/info';
-import { Intent } from 'common/intent';
-import { Size } from 'common/size';
-import { Icon } from 'components';
+import { DISPLAY_NAME_PREFIX } from '../../common/info';
+import { Intent } from '../../common/intent';
+import { Size } from '../../common/size';
+import { Icon } from '../../components';
 import {
   useThemeStore,
   useJSS,
-} from 'theme';
+} from '../../theme';
 import tagStyles from './tag.styles';
 import {
   ITag,
   ITagProps,
+  DefaultProps,
 } from './props';
+
+const displayName: string = `${DISPLAY_NAME_PREFIX}.Tag`;
+const defaultProps: DefaultProps = {
+  intent: Intent.DEFAULT,
+  size: Size.DEFAULT,
+  disabled: false,
+};
 
 const tag: ITag<ITagProps> = (props) => {
   const {
@@ -27,7 +35,7 @@ const tag: ITag<ITagProps> = (props) => {
 
   const [theme] = useThemeStore();
   const [classes] = useJSS(
-    tagStyles(props)(theme),
+    tagStyles(props, theme),
     [theme, props],
   );
 
@@ -42,55 +50,32 @@ const tag: ITag<ITagProps> = (props) => {
     classes.wrapper,
   );
 
-  {onClose &&
-    (
-      <div
-        className={classes.actions}
-      >
-        <Icon
-          onClick={handleClose}
-          icon={Icon.Type.close}
-          size={size}
-          intent={intent}
-        />
-      </div>
-    )
-  }
+  const actionWrapper = (
+    <div className={classes.actions}>
+      <Icon
+        onClick={handleClose}
+        icon={Icon.Type.close}
+        size={size}
+        intent={intent}
+      />
+    </div>
+  );
 
   return (
-    <div
-      className={wrapper}
-    >
-      <div
-        className={classes.label}
-      >
+    <div className={wrapper}>
+      <div className={classes.label}>
         {value.label}
       </div>
-      {onClose && (
-        <div
-          className={classes.actions}
-        >
-          <Icon
-            onClick={handleClose}
-            icon={Icon.Type.close}
-            size={size}
-            intent={intent}
-          />
-        </div>
-      )}
+      {onClose && actionWrapper}
     </div>
   );
 };
 
-tag.displayName = `${DISPLAY_NAME_PREFIX}.Tag`;
+tag.displayName = displayName;
+tag.defaultProps = defaultProps;
+
 tag.Intent = Intent;
 tag.Size = Size;
-
-tag.defaultProps = {
-  intent: Intent.DEFAULT,
-  size: Size.DEFAULT,
-  disabled: false,
-};
 
 export {
   tag as Tag,

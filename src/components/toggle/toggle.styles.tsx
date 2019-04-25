@@ -1,14 +1,24 @@
-import { getSize } from 'common/size';
-import { ITheme } from 'theme';
+import { css } from 'emotion';
+
+import { getSize } from '../../common/size';
+import { ITheme } from '../../theme';
 import { IToggleProps } from './props';
 import {
   Intent,
   getIntent,
-} from 'common/intent';
+} from '../../common/intent';
 
-export default (props: IToggleProps) => (theme: ITheme): Record<string, object> => ({
-  label: {
-    userSelect: 'none' as 'none',
+type ITogglStyles = {
+  label: string;
+  wrapper: string;
+  indicator: string;
+  indicatorActive: string;
+  text: string;
+};
+
+export default (props: IToggleProps, theme: ITheme): ITogglStyles => ({
+  label: css({
+    userSelect: 'none',
     display: 'flex',
     color: theme.palette.text.default,
     cursor: props.disabled
@@ -17,9 +27,9 @@ export default (props: IToggleProps) => (theme: ITheme): Record<string, object> 
     opacity: props.disabled
       ? 0.5
       : 1,
-  },
-  wrapper: {
-    position: 'relative' as 'relative',
+  }),
+  wrapper: css({
+    position: 'relative',
     display: 'inline-block',
     width: getSize(
       props.size,
@@ -29,9 +39,9 @@ export default (props: IToggleProps) => (theme: ITheme): Record<string, object> 
       props.size,
       ['1.05rem', '1.5rem', '2rem'],
     ),
-  },
-  indicator: {
-    position: 'absolute' as 'absolute',
+  }),
+  indicator: css({
+    position: 'absolute',
     top: 0,
     right: 0,
     bottom: 0,
@@ -51,16 +61,16 @@ export default (props: IToggleProps) => (theme: ITheme): Record<string, object> 
       borderRadius: '50% !important',
       background: '#ddd',
     },
-  },
-  indicatorActive: {
+  }),
+  indicatorActive: css({
     border: `1px solid ${getIntent(Intent.PRIMARY, theme.palette.intent)}`,
 
     '&:before': {
       transform: 'translateX(1.625rem)',
       background: getIntent(Intent.PRIMARY, theme.palette.intent),
     },
-  },
-  text: {
+  }),
+  text: css({
     margin: getSize(
       props.size, [
         '2px 8px',
@@ -75,5 +85,5 @@ export default (props: IToggleProps) => (theme: ITheme): Record<string, object> 
         theme.topography.text.large,
       ],
     ),
-  },
+  }),
 });

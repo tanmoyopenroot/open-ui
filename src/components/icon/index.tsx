@@ -1,2 +1,4 @@
-export * from './icon';
-export * from './props';
+import { IIconProps } from './props';
+
+export type IIconProps = IIconProps;
+export { Icon } from './icon';

@@ -1,6 +1,4 @@
 import * as React from 'react';
-import jss from 'jss';
-import jssPresetDefault from 'jss-preset-default';
 
 import {
   createTheme,
@@ -19,7 +17,6 @@ interface IStore {
 let store: IStore;
 
 export const createThemeStore = (options?: IThemeOptions) => {
-  jss.setup(jssPresetDefault());
   const theme = createTheme(options);
 
   store = {
