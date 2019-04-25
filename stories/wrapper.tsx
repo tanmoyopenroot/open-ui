@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { HTMLDivProps } from 'common/props';
-import { createThemeStore } from 'theme';
+import { HTMLDivProps } from '../src/common/props';
+import { createThemeStore } from '../src/theme';
 
 createThemeStore();
 

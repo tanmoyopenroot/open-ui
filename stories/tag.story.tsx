@@ -27,14 +27,9 @@ const props: ITagProps = {
   onClose: (data) => { console.log(data); },
 };
 
-const stories = storiesOf('Tag', module);
-
-stories.add('default', () => (
-  <StoryWrapper
-    {...wrapperProps}
-  >
-    <Tag
-      {...props}
-    />
-  </StoryWrapper>
+storiesOf('Tag', module)
+  .add('default', () => (
+    <StoryWrapper {...wrapperProps}>
+      <Tag {...props}/>
+    </StoryWrapper>
 ));

@@ -50,12 +50,8 @@ class IconExample extends React.PureComponent<{}, IIconExamplePState> {
     };
 
     return (
-      <Story
-        controller={controller}
-      >
-        <Icon
-          {...props}
-        />
+      <Story controller={controller}>
+        <Icon {...props} />
       </Story>
     );
   }

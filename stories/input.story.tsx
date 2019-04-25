@@ -42,14 +42,9 @@ const inputProps:IInputProps = {
   onChange: (event, data) => { console.log(event, data); },
 };
 
-const stories = storiesOf('Input', module);
-
-stories.add('default', () => (
-  <StoryWrapper
-    {...wrapperProps}
-  >
-    <Input
-      {...inputProps}
-    />
-  </StoryWrapper>
-));
+storiesOf('Input', module)
+  .add('default', () => (
+    <StoryWrapper {...wrapperProps}>
+      <Input {...inputProps}/>
+    </StoryWrapper>
+  ));

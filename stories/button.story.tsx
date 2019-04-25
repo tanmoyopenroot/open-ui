@@ -14,26 +14,21 @@ const wrapperProps:IStoryWrapperProps = {
   width: '30%',
 };
 
-const props:IButtonProps = {
+const props: IButtonProps = {
   intent: Button.Intent.PRIMARY,
   size: Button.Size.DEFAULT,
   icon: Button.Icon.alarmClock,
   circular: true,
   // outlined: true,
   // disabled: true,
-  onClick: (event) => { console.log(event); },
+  onClick: (event: React.FormEvent<HTMLButtonElement>) => { console.log(event); },
 };
 
-const stories = storiesOf('Button', module);
-
-stories.add('default', () => (
-  <StoryWrapper
-    {...wrapperProps}
-  >
-    <Button
-      {...props}
-    >
-      Clickable Button
-    </Button>
-  </StoryWrapper>
-));
+storiesOf('Button', module)
+  .add('default', () => (
+    <StoryWrapper {...wrapperProps}>
+      <Button {...props}>
+        Clickable Button
+      </Button>
+    </StoryWrapper>
+  ));

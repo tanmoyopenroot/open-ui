@@ -21,14 +21,9 @@ const props:IToggleProps = {
   onChange: (data) => { console.log(data); },
 };
 
-const stories = storiesOf('Toogle', module);
-
-stories.add('default', () => (
-  <StoryWrapper
-    {...wrapperProps}
-  >
-    <Toggle
-      {...props}
-    />
-  </StoryWrapper>
-));
+storiesOf('Toogle', module)
+  .add('default', () => (
+    <StoryWrapper {...wrapperProps}>
+      <Toggle {...props}/>
+    </StoryWrapper>
+  ));
