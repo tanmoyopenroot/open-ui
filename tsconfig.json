@@ -21,7 +21,11 @@
   },
   "include": [
     "src",
-    "stories"
+    "stories",
   ],
-  "extends": "./alias.json"
+  "exclude": [
+    "node_modules",
+    "build",
+    "scripts"
+  ],
 }
