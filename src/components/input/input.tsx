@@ -4,11 +4,11 @@ import classnames from 'classnames';
 import { DISPLAY_NAME_PREFIX } from '../../common/info';
 import { Intent } from '../../common/intent';
 import { Size } from '../../common/size';
-import {
-  useThemeStore,
-  useJSS,
-} from '../../theme';
 import inputStyles from './input.styles';
+import {
+  useTheme,
+  useClasses,
+} from '../../common/hooks';
 import {
   InputType,
   IInput,
@@ -23,7 +23,7 @@ const defaultProps: DefaultProps = {
   type: InputType.TEXT,
 };
 
-const input: IInput<IInputProps> = (props) => {
+const Input: IInput<IInputProps> = (props) => {
   const {
     leftElement,
     rightElement,
@@ -36,10 +36,10 @@ const input: IInput<IInputProps> = (props) => {
     onChange,
   } = props;
 
-  const [theme] = useThemeStore();
-  const [classes] = useJSS(
+  const { theme } = useTheme();
+  const { classes } = useClasses(
     inputStyles(props, theme),
-    [theme, props],
+    [theme.type, props],
   );
 
   const handleChange = React.useCallback(
@@ -51,26 +51,32 @@ const input: IInput<IInputProps> = (props) => {
     [disabled],
   );
 
-  const wrapper = classnames(
-    className,
-    classes.wrapper,
-    { [classes.elevated]: elevated },
+  const leftNode = React.useMemo(
+    () => (
+      <div className={classes.leftElement}>
+        {leftElement}
+      </div>
+    ),
+    [leftElement],
   );
 
-  const leftNode = (
-    <div className={classes.leftElement}>
-      {leftElement}
-    </div>
-  );
-
-  const rightNode = (
-    <div className={classes.rightElement}>
-      {rightElement}
-    </div>
+  const rightNode = React.useMemo(
+    () => (
+      <div className={classes.rightElement}>
+        {rightElement}
+      </div>
+    ),
+    [rightElement],
   );
 
   return (
-    <div className={wrapper}>
+    <div
+      className={classnames(
+        className,
+        classes.wrapper,
+        { [classes.elevated]: elevated },
+      )}
+    >
       {leftElement && leftNode}
       <input
         className={classes.input}
@@ -85,13 +91,13 @@ const input: IInput<IInputProps> = (props) => {
   );
 };
 
-input.displayName = displayName;
-input.defaultProps = defaultProps;
+Input.displayName = displayName;
+Input.defaultProps = defaultProps;
 
-input.Intent = Intent;
-input.Size = Size;
-input.Type = InputType;
+Input.Intent = Intent;
+Input.Size = Size;
+Input.Type = InputType;
 
 export {
-  input as Input,
+  Input,
 };

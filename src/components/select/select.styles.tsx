@@ -8,6 +8,7 @@ type ISelectStyles = {
   selectController: string;
   selectedDataContainer: string;
   input: string;
+  inputFocused: string;
   actions: string;
   dropdownList: string;
   label: string;
@@ -19,7 +20,7 @@ export default (props: ISelectProps, theme: ITheme): ISelectStyles => ({
     display: 'flex',
     justifyContent: 'space-between',
     minHeight: '38px',
-    border: `1px solid ${theme.palette.line}`,
+    border: `2px solid ${theme.palette.line}`,
     transition: 'all 100ms ease 0s',
     outline: '0px !important',
     borderRadius: theme.shape.borderRadius,
@@ -29,10 +30,6 @@ export default (props: ISelectProps, theme: ITheme): ISelectStyles => ({
     backgroundColor: props.disabled
       ? theme.palette.disabled
       : theme.palette.colors.White.default,
-
-    '&:focus-within': {
-      border: `1px solid ${theme.palette.intent.primary}`,
-    },
   }),
   selectedDataContainer: css({
     width: '100%',
@@ -51,6 +48,9 @@ export default (props: ISelectProps, theme: ITheme): ISelectStyles => ({
     color: getIntent(Intent.DEFAULT, theme.palette.intent),
     lineHeight: 'normal',
     borderRadius: 0,
+  }),
+  inputFocused: css({
+    border: `2px solid ${theme.palette.intent.primary}`,
   }),
   actions: css({
     padding: 8,

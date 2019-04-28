@@ -3,11 +3,11 @@ import classnames from 'classnames';
 
 import { DISPLAY_NAME_PREFIX } from '../../common/info';
 import { Size } from '../../common/size';
-import {
-  useThemeStore,
-  useJSS,
-} from '../../theme';
 import toggleStyles from './toggle.styles';
+import {
+  useTheme,
+  useClasses,
+} from '../../common/hooks';
 import {
   IToggle,
   ToggleType,
@@ -21,7 +21,7 @@ const defaultProps: DefaultProps = {
   size: Size.DEFAULT,
 };
 
-const toggle: IToggle<IToggleProps> = (props) => {
+const Toggle: IToggle<IToggleProps> = (props) => {
   const {
     className,
     defaultChecked,
@@ -32,8 +32,8 @@ const toggle: IToggle<IToggleProps> = (props) => {
     onChange,
   } = props;
 
-  const [theme] = useThemeStore();
-  const [classes] = useJSS(
+  const { theme } = useTheme();
+  const { classes } = useClasses(
     toggleStyles(props, theme),
     [theme, props],
   );
@@ -42,25 +42,25 @@ const toggle: IToggle<IToggleProps> = (props) => {
     return defaultChecked || false;
   });
 
-  const handleChange = () => {
-    if (!disabled) {
-      setChecked(!checked);
-      onChange(!checked);
-    }
-  };
-
-  const combinedClasses = classnames(
-    className,
-    classes.label,
-  );
-
-  const indicator = classnames(
-    classes.indicator,
-    { [classes.indicatorActive]: checked },
+  const handleChange = React.useCallback(
+    () => {
+      if (!disabled) {
+        setChecked((currentChecked) => {
+          onChange(!currentChecked);
+          return !currentChecked;
+        });
+      }
+    },
+    [disabled],
   );
 
   return (
-    <label className={combinedClasses}>
+    <label
+      className={classnames(
+        className,
+        classes.label,
+      )}
+    >
       <div className={classes.wrapper}>
         <input
           hidden={true}
@@ -69,7 +69,12 @@ const toggle: IToggle<IToggleProps> = (props) => {
           onChange={handleChange}
           type={type}
         />
-        <span className={indicator}/>
+        <span
+          className={classnames(
+            classes.indicator,
+            { [classes.indicatorActive]: checked },
+          )}
+        />
       </div>
       <div className={classes.text}>
         {label}
@@ -78,12 +83,12 @@ const toggle: IToggle<IToggleProps> = (props) => {
   );
 };
 
-toggle.displayName = displayName;
-toggle.defaultProps = defaultProps;
+Toggle.displayName = displayName;
+Toggle.defaultProps = defaultProps;
 
-toggle.Type = ToggleType;
-toggle.Size = Size;
+Toggle.Type = ToggleType;
+Toggle.Size = Size;
 
 export {
-  toggle as Toggle,
+  Toggle,
 };

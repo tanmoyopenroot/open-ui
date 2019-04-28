@@ -1,21 +1,23 @@
 import * as React from 'react';
+import classnames from 'classnames';
 
 import { DISPLAY_NAME_PREFIX } from '../../common/info';
+import useSelectState from './useSelectState';
+import selectStyles from './select.styles';
 import {
-  useThemeStore,
-  useJSS,
-} from '../../theme';
+  useTheme,
+  useClasses,
+  useClickOutside,
+} from '../../common/hooks';
 import {
   Icon,
   Tag,
+  ITagProps,
 } from '../../components';
-
-import selectStyles from './select.styles';
 import {
   ISelect,
   ISelectProps,
   DefaultProps,
-  ISelectOption,
 } from './props';
 
 const displayName: string = `${DISPLAY_NAME_PREFIX}.Select`;
@@ -27,89 +29,96 @@ const defaultProps: DefaultProps = {
   clearable: true,
 };
 
-const select: ISelect<ISelectProps> = (props) => {
+const MemoizedIcon = React.memo(() => (
+  <Icon
+    icon={Icon.Type.close}
+    intent={Icon.Intent.DEFAULT}
+  />
+));
+
+const MemoizedTag = (props: ITagProps) => React.useMemo(
+  () => (
+    <Tag
+      value={props.value}
+      size={Tag.Size.SMALL}
+    />
+  ),
+  [props.value],
+);
+
+const Select: ISelect<ISelectProps> = (props) => {
   const {
     defaultValue = [],
     options,
     clearable,
-    disabled,
     className,
   } = props;
 
-  const [theme] = useThemeStore();
-  const [classes] = useJSS(
+  const { theme } = useTheme();
+  const { classes } = useClasses(
     selectStyles(props, theme),
-    [theme, props],
+    [theme.type, props],
   );
-  const [focused, setFocus] = React.useState(false);
-
-  const handleInputFocus = (event: React.FormEvent<HTMLInputElement>) => {
-    if (!disabled) {
-      console.log(focused);
-      setFocus(!focused);
-    }
-  };
-
-  const logs = (data: ISelectOption) => {
-    console.log(data);
-  };
-
-  const getDefaultValues = () => {
-    return defaultValue.map(data => (
-      <Tag
-        key={`${data.value}`}
-        value={data}
-        size={Tag.Size.SMALL}
-        onClose={logs}
-      />
-    ));
-  };
-
-  const clearableNode = (
-    <div className={classes.actions}>
-      <Icon
-        icon={Icon.Type.close}
-        intent={Icon.Intent.DEFAULT}
-      />
-    </div>
-  );
-
-  /* tslint:disable */
-  const getOptions = () => (
-    <div className={classes.dropdownList}>
-      {options.map(option => (
-        <div
-          className={classes.label}
-          key={option.value}
-        >
-          {option.label}
-        </div>
-      ))}
-    </div>
-  );
-  /* tslint:enable */
+  const {
+    focus,
+    setFocus,
+    selectedValues,
+    setSelectedValues,
+  } = useSelectState({
+    focus: false,
+    selectedValues: defaultValue,
+  });
+  const [node] = useClickOutside(() => setFocus(false));
 
   return (
-    <div className={className}>
-      <div className={classes.selectController}>
+    <div
+      className={className}
+      ref={node}
+    >
+      <div
+        className={classnames(
+          classes.selectController,
+          { [classes.inputFocused]: focus },
+        )}
+      >
         <div className={classes.selectedDataContainer}>
-          {defaultValue && getDefaultValues()}
+          {selectedValues && selectedValues.map(data => (
+            <MemoizedTag
+              key={`${data.value}`}
+              value={data}
+            />
+          ))}
           <input
             className={classes.input}
-            onFocus={handleInputFocus}
-            onBlur={handleInputFocus}
+            onFocus={() => setFocus(true)}
           />
         </div>
-        {clearable && clearableNode}
+        {clearable && (
+          <div className={classes.actions}>
+            <MemoizedIcon />
+          </div>
+        )}
       </div>
-      {focused && options.length && getOptions()}
+      {focus && options.length && (
+        <div className={classes.dropdownList}>
+          {options.map(option => (
+            <div
+              key={option.value}
+              className={classes.label}
+              onClick={setSelectedValues(option)}
+            >
+              {option.label}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
 
-select.displayName = displayName;
-select.defaultProps = defaultProps;
+Select.displayName = displayName;
+Select.defaultProps = defaultProps;
 
 export {
-  select as Select,
+  Select,
 };

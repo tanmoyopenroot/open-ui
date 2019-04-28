@@ -3,11 +3,11 @@ import classnames from 'classnames';
 
 import { DISPLAY_NAME_PREFIX } from '../../common/info';
 import { Elevation } from '../../common/elevation';
-import {
-  useThemeStore,
-  useJSS,
-} from '../../theme';
 import cardStyles from './card.styles';
+import {
+  useTheme,
+  useClasses,
+} from '../../common/hooks';
 import {
   ICard,
   ICardProps,
@@ -19,37 +19,35 @@ const defaultProps: DefaultProps = {
   elevation: Elevation.ZERO,
 };
 
-const card: ICard<ICardProps> = (props) => {
+const Card: ICard<ICardProps> = (props) => {
   const {
     className,
     style,
     ...htmlProps
   } = props;
 
-  const [theme] = useThemeStore();
-  const [classes] = useJSS(
+  const { theme } = useTheme();
+  const { classes } = useClasses(
     cardStyles(props, theme),
-    [theme, props],
-  );
-
-  const combinedClasses = classnames(
-    className,
-    classes.card,
+    [theme.type, props],
   );
 
   return (
     <div
-      className={combinedClasses}
+      className={classnames(
+        className,
+        classes.card,
+      )}
       {...htmlProps}
     />
   );
 };
 
-card.displayName = displayName;
-card.defaultProps = defaultProps;
+Card.displayName = displayName;
+Card.defaultProps = defaultProps;
 
-card.Elevation = Elevation;
+Card.Elevation = Elevation;
 
 export {
-  card as Card,
+  Card,
 };

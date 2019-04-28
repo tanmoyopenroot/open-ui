@@ -4,12 +4,15 @@ import classnames from 'classnames';
 import { DISPLAY_NAME_PREFIX } from '../../common/info';
 import { Intent } from '../../common/intent';
 import { Size } from '../../common/size';
-import { Icon } from '../../components';
-import {
-  useThemeStore,
-  useJSS,
-} from '../../theme';
 import tagStyles from './tag.styles';
+import {
+  useTheme,
+  useClasses,
+} from '../../common/hooks';
+import {
+  Icon,
+  IIconProps,
+} from '../../components';
 import {
   ITag,
   ITagProps,
@@ -23,7 +26,16 @@ const defaultProps: DefaultProps = {
   disabled: false,
 };
 
-const tag: ITag<ITagProps> = (props) => {
+const MemoizedIcon = React.memo((props: IIconProps) => (
+  <Icon
+    onClick={props.onClick}
+    icon={Icon.Type.close}
+    size={props.size}
+    intent={props.intent}
+  />
+));
+
+const Tag: ITag<ITagProps> = (props) => {
   const {
     className,
     value,
@@ -33,50 +45,50 @@ const tag: ITag<ITagProps> = (props) => {
     size,
   } = props;
 
-  const [theme] = useThemeStore();
-  const [classes] = useJSS(
+  const { theme } = useTheme();
+  const { classes } = useClasses(
     tagStyles(props, theme),
-    [theme, props],
+    [theme.type, props],
   );
 
-  const handleClose = (event: React.MouseEvent<HTMLElement>) => {
-    if (!disabled && onClose) {
-      onClose(value);
-    }
-  };
-
-  const wrapper = classnames(
-    className,
-    classes.wrapper,
-  );
-
-  const actionWrapper = (
-    <div className={classes.actions}>
-      <Icon
-        onClick={handleClose}
-        icon={Icon.Type.close}
-        size={size}
-        intent={intent}
-      />
-    </div>
+  const handleClose = React.useCallback(
+    () => {
+      if (!disabled && onClose) {
+        onClose(value);
+      }
+    },
+    [disabled],
   );
 
   return (
-    <div className={wrapper}>
+    <div
+      className={classnames(
+        className,
+        classes.wrapper,
+      )}
+    >
       <div className={classes.label}>
         {value.label}
       </div>
-      {onClose && actionWrapper}
+      {onClose && (
+        <div className={classes.actions}>
+          <MemoizedIcon
+            onClick={handleClose}
+            size={size}
+            intent={intent}
+          />
+        </div>
+      )}
     </div>
   );
 };
 
-tag.displayName = displayName;
-tag.defaultProps = defaultProps;
+Tag.displayName = displayName;
+Tag.defaultProps = defaultProps;
 
-tag.Intent = Intent;
-tag.Size = Size;
+Tag.Intent = Intent;
+Tag.Size = Size;
 
 export {
-  tag as Tag,
+  Tag,
 };

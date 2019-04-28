@@ -1,19 +1,19 @@
 import * as React from 'react';
 
 import { DISPLAY_NAME_PREFIX } from '../../common/info';
-import { useJSS } from '../../theme';
+import { useClasses } from '../../common/hooks';
 import storyStyles from './story.styles';
 import { IStoryProps } from './props';
 
 const displayName = `${DISPLAY_NAME_PREFIX}.Story`;
 
-const story: React.FunctionComponent<IStoryProps> = (props) => {
+const Story: React.FunctionComponent<IStoryProps> = (props) => {
   const {
     controller,
     children,
   } = props;
 
-  const [classes] = useJSS(
+  const { classes } = useClasses(
     storyStyles(),
     [],
   );
@@ -33,8 +33,8 @@ const story: React.FunctionComponent<IStoryProps> = (props) => {
   );
 };
 
-story.displayName = displayName;
+Story.displayName = displayName;
 
 export {
-  story as Story,
+  Story,
 };

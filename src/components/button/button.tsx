@@ -5,12 +5,15 @@ import { DISPLAY_NAME_PREFIX } from '../../common/info';
 import { Intent } from '../../common/intent';
 import { Size } from '../../common/size';
 import { IconList } from '../../common/icons';
-import { Icon } from '../icon';
-import {
-  useThemeStore,
-  useJSS,
-} from '../../theme';
 import buttonStyles from './button.styles';
+import {
+  useTheme,
+  useClasses,
+} from '../../common/hooks';
+import {
+  Icon,
+  IIconProps,
+} from '../icon';
 import {
   IButton,
   IButtonProps,
@@ -25,7 +28,14 @@ const defaultProps: DefaultProps = {
   type: ButtonType.DEFAULT,
 };
 
-const button: IButton<IButtonProps> = (props) => {
+const MemoizedIcon = React.memo((props: IIconProps) => (
+  <Icon
+    icon={props.icon}
+    size={props.size}
+  />
+));
+
+const Button: IButton<IButtonProps> = (props) => {
   const {
     className,
     circular,
@@ -37,10 +47,10 @@ const button: IButton<IButtonProps> = (props) => {
     onClick,
   } = props;
 
-  const [theme] = useThemeStore();
-  const [classes] = useJSS(
+  const { theme } = useTheme();
+  const { classes } = useClasses(
     buttonStyles(props, theme),
-    [theme, props],
+    [theme.type, props],
   );
 
   const handleClick = React.useCallback(
@@ -49,21 +59,19 @@ const button: IButton<IButtonProps> = (props) => {
         onClick(event);
       }
     },
-    [disabled, onClick],
-  );
-
-  const combinedClasses = classnames(
-    className,
-    classes.button,
+    [disabled],
   );
 
   return (
     <button
-      className={combinedClasses}
+      className={classnames(
+        className,
+        classes.button,
+      )}
       type={type}
       onClick={handleClick}
     >
-      <Icon
+      <MemoizedIcon
         icon={icon}
         size={size}
       />
@@ -72,14 +80,14 @@ const button: IButton<IButtonProps> = (props) => {
   );
 };
 
-button.displayName = displayName;
-button.defaultProps = defaultProps;
+Button.displayName = displayName;
+Button.defaultProps = defaultProps;
 
-button.Intent = Intent;
-button.Size = Size;
-button.Type = ButtonType;
-button.Icon = IconList;
+Button.Intent = Intent;
+Button.Size = Size;
+Button.Type = ButtonType;
+Button.Icon = IconList;
 
 export {
-  button as Button,
+  Button,
 };

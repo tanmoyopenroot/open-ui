@@ -2,6 +2,7 @@ import {
   createPalette,
   IPaletteOptions,
   IPalette,
+  ThemeType,
 } from './styles/palette';
 import {
   shape as defaultShape,
@@ -31,9 +32,13 @@ export interface ITheme {
   spacing: ISpacing;
   elevations: string[];
   topography: ITopography;
+  type: ThemeType;
 }
 
-export const createTheme = (options: Partial<IThemeOptions> = {}) : ITheme => {
+export const createTheme = (
+  defaultTheme: ThemeType,
+  options: Partial<IThemeOptions> = {},
+) : ITheme => {
   const {
     paletteOption,
     spacing: spacingOption,
@@ -42,7 +47,7 @@ export const createTheme = (options: Partial<IThemeOptions> = {}) : ITheme => {
     topography: topographyOptions,
   } = options;
 
-  const palette = createPalette(paletteOption);
+  const palette = createPalette(paletteOption, defaultTheme);
   const shape = { ...defaultShape, ...spacingOption };
   const spacing = { ...defaultSpacing, ...shapeOption };
 
@@ -52,6 +57,7 @@ export const createTheme = (options: Partial<IThemeOptions> = {}) : ITheme => {
     spacing,
     topography: topographyOptions || topography,
     elevations: inputElevations || elevations,
+    type: defaultTheme,
   };
 
   return theme;

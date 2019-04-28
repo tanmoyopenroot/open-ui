@@ -1,8 +1,8 @@
 import * as colors from '../colors';
 
-export enum themeType {
-  light = 'light',
-  dark  = 'dark',
+export enum ThemeType {
+  LIGHT = 'light',
+  DARK = 'dark',
 }
 
 export interface IPalette {
@@ -93,5 +93,4 @@ export interface IPaletteOptions {
     light: string;
     dark: string;
   };
-  type: themeType;
 }

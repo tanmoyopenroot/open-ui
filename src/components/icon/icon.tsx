@@ -5,11 +5,11 @@ import { DISPLAY_NAME_PREFIX } from '../../common/info';
 import { IconList } from '../../common/icons';
 import { Intent } from '../../common/intent';
 import { Size } from '../../common/size';
-import {
-  useThemeStore,
-  useJSS,
-} from '../../theme';
 import iconStyles from './icon.styles';
+import {
+  useTheme,
+  useClasses,
+} from '../../common/hooks';
 import {
   IIcon,
   IIconProps,
@@ -23,7 +23,7 @@ const defaultProps: DefaultProps = {
   disabled: false,
 };
 
-const icon: IIcon<IIconProps> = (props) => {
+const Icon: IIcon<IIconProps> = (props) => {
   const {
     icon,
     className,
@@ -31,10 +31,10 @@ const icon: IIcon<IIconProps> = (props) => {
     onClick,
   } = props;
 
-  const [theme] = useThemeStore();
-  const [classes] = useJSS(
+  const { theme } = useTheme();
+  const { classes } = useClasses(
     iconStyles(props, theme),
-    [theme, props],
+    [theme.type, props],
   );
 
   const handleClick = React.useCallback(
@@ -43,30 +43,28 @@ const icon: IIcon<IIconProps> = (props) => {
         onClick(event);
       }
     },
-    [disabled, onClick],
-  );
-
-  const combinedClasses = classnames(
-    icon,
-    className,
-    classes.icon,
+    [disabled],
   );
 
   return (
     <span
-      className={combinedClasses}
+      className={classnames(
+        icon,
+        className,
+        classes.icon,
+      )}
       onClick={handleClick}
     />
   );
 };
 
-icon.displayName = displayName;
-icon.defaultProps = defaultProps;
+Icon.displayName = displayName;
+Icon.defaultProps = defaultProps;
 
-icon.Intent = Intent;
-icon.Size = Size;
-icon.Type = IconList;
+Icon.Intent = Intent;
+Icon.Size = Size;
+Icon.Type = IconList;
 
 export {
-  icon as Icon,
+  Icon,
 };

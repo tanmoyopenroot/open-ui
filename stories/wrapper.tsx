@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { HTMLDivProps } from '../src/common/props';
-import { createThemeStore } from '../src/theme';
-
-createThemeStore();
+import { ThemeProvider } from '../src/theme';
 
 export interface IStoryWrapperProps extends HTMLDivProps {
   width: string;
@@ -11,6 +9,7 @@ export interface IStoryWrapperProps extends HTMLDivProps {
 const wrapper: React.FunctionComponent<IStoryWrapperProps> = (props) => {
   const {
     width,
+    children,
     ...htmlProps
   } = props;
 
@@ -20,10 +19,14 @@ const wrapper: React.FunctionComponent<IStoryWrapperProps> = (props) => {
   };
 
   return (
-    <div
-      style={style}
-      {...htmlProps}
-    />
+    <ThemeProvider>
+      <div
+        style={style}
+        {...htmlProps}
+      >
+        {children}
+      </div>
+    </ThemeProvider>
   );
 };
 

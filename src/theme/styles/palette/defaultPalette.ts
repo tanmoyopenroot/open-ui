@@ -4,7 +4,6 @@ import {
   IIntentPalette,
   IBackgroundPalette,
   IPaletteOptions,
-  themeType,
 } from './props';
 
 const textPalette: ITextPalette = {
@@ -72,7 +71,6 @@ const defaultPalette: IPaletteOptions = {
     light: '#adb5bd',
     dark: 'rgba(255, 255, 255, 0.5)',
   },
-  type: themeType.light,
 };
 
 export default defaultPalette;
