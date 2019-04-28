@@ -1,6 +1,12 @@
 {
   "extends": [ 
     "tslint-config-airbnb",
-    "tslint-react"
-  ]
+    "tslint-react",
+    "tslint-react-hooks"
+  ],
+  "rules": {
+    "jsx-no-multiline-js": false,
+    "react-hooks-nesting": "error",
+    "variable-name": [true, "ban-keywords", "check-format", "allow-pascal-case"]
+  }
 }
