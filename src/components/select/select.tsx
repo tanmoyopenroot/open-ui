@@ -68,7 +68,7 @@ const Select: ISelect<ISelectProps> = (props) => {
     focus: false,
     selectedValues: defaultValue,
   });
-  const [node] = useClickOutside(() => setFocus(false));
+  const [node] = useClickOutside(setFocus(false));
 
   return (
     <div
@@ -90,7 +90,7 @@ const Select: ISelect<ISelectProps> = (props) => {
           ))}
           <input
             className={classes.input}
-            onFocus={() => setFocus(true)}
+            onFocus={setFocus(true)}
           />
         </div>
         {clearable && (

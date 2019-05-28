@@ -71,7 +71,7 @@ export default (props: ISelectProps, theme: ITheme): ISelectStyles => ({
     padding: '.5rem 1rem',
     border: 0,
     cursor: 'pointer',
-    userSelect: 'none' as 'none',
+    userSelect: 'none',
     backgroundColor: 'transparent',
     color: getIntent(Intent.DEFAULT, theme.palette.intent),
 

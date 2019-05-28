@@ -49,7 +49,7 @@ const selectReducer = (state: IState, action: IAction) => {
 const useSelectState = (intial: IState = intialState) => {
   const [state, dispatch] = React.useReducer(selectReducer, intial);
 
-  const setFocus = (focus: boolean) => dispatch({
+  const setFocus = (focus: boolean) => () => dispatch({
     type: Type.SET_FOCUS,
     payload: {
       focus,
