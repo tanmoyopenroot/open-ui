@@ -4,15 +4,12 @@ import { themeContext } from '../../theme';
 import { ThemeType } from '../../theme/styles/palette';
 
 const useTheme = () => {
-  const [theme, dispatch] = React.useContext(themeContext);
-
-  const setLightTheme = () => dispatch({
-    type: ThemeType.LIGHT,
-  });
-
-  const setDarkTheme = () => dispatch({
-    type: ThemeType.DARK,
-  });
+  const {
+    theme,
+    setTheme,
+  } = React.useContext(themeContext);
+  const setLightTheme = () => setTheme(ThemeType.LIGHT);
+  const setDarkTheme = () => setTheme(ThemeType.DARK);
 
   return {
     theme,
