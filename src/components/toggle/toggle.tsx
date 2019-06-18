@@ -32,10 +32,10 @@ const Toggle: IToggle<IToggleProps> = (props) => {
     onChange,
   } = props;
 
-  const { theme } = useTheme();
-  const { classes } = useClasses(
-    toggleStyles(props, theme),
-    [theme, props],
+  const [theme] = useTheme();
+  const [classes] = useClasses(
+    () => toggleStyles(props, theme),
+    [theme.type, props],
   );
 
   const [checked, setChecked] = React.useState(() => {

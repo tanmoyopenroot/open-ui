@@ -13,8 +13,8 @@ const Story: React.FunctionComponent<IStoryProps> = (props) => {
     children,
   } = props;
 
-  const { classes } = useClasses(
-    storyStyles(),
+  const [classes] = useClasses(
+    () => storyStyles(),
     [],
   );
 

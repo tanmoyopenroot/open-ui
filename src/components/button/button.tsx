@@ -47,9 +47,9 @@ const Button: IButton<IButtonProps> = (props) => {
     onClick,
   } = props;
 
-  const { theme } = useTheme();
-  const { classes } = useClasses(
-    buttonStyles(props, theme),
+  const [theme] = useTheme();
+  const [classes] = useClasses(
+    () => buttonStyles(props, theme),
     [theme.type, props],
   );
 

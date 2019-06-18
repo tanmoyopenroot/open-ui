@@ -1,21 +1,31 @@
 import * as React from 'react';
 
-import { themeContext } from '../../theme';
 import { ThemeType } from '../../theme/styles/palette';
+import {
+  themeContext,
+  ITheme,
+} from '../../theme';
 
-const useTheme = () => {
+const useTheme = (): [
+  ITheme,
+  string,
+  () => void,
+  () => void,
+] => {
   const {
     theme,
+    type,
     setTheme,
   } = React.useContext(themeContext);
   const setLightTheme = () => setTheme(ThemeType.LIGHT);
   const setDarkTheme = () => setTheme(ThemeType.DARK);
 
-  return {
+  return [
     theme,
+    type,
     setLightTheme,
     setDarkTheme,
-  };
+  ];
 };
 
 export default useTheme;

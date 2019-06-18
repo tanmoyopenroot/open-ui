@@ -36,9 +36,9 @@ const Input: IInput<IInputProps> = (props) => {
     onChange,
   } = props;
 
-  const { theme } = useTheme();
-  const { classes } = useClasses(
-    inputStyles(props, theme),
+  const [theme] = useTheme();
+  const [classes] = useClasses(
+    () => inputStyles(props, theme),
     [theme.type, props],
   );
 

@@ -26,9 +26,9 @@ const Card: ICard<ICardProps> = (props) => {
     ...htmlProps
   } = props;
 
-  const { theme } = useTheme();
-  const { classes } = useClasses(
-    cardStyles(props, theme),
+  const [theme] = useTheme();
+  const [classes] = useClasses(
+    () => cardStyles(props, theme),
     [theme.type, props],
   );
 

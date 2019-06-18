@@ -31,9 +31,9 @@ const Icon: IIcon<IIconProps> = (props) => {
     onClick,
   } = props;
 
-  const { theme } = useTheme();
-  const { classes } = useClasses(
-    iconStyles(props, theme),
+  const [theme] = useTheme();
+  const [classes] = useClasses(
+    () => iconStyles(props, theme),
     [theme.type, props],
   );
 

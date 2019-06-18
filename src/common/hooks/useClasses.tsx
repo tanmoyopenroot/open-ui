@@ -1,27 +1,18 @@
 import * as React from 'react';
 
-const useClasses = <T extends {}>(styles: T, inputs: any[]) => {
-  const [classes] = React.useState(() => {
-    console.log('create');
-    return styles;
-  });
+const useClasses = <T extends {}>(createClasses: () => T, deps: any[]) => {
+  const [classes, setClasses] = React.useState(() => createClasses());
 
-  // console.log(inputs);
-  // const updateSheet = () => {
-  //   setSheet(styles);
-  // };
+  React.useEffect(
+    () => {
+      setClasses(createClasses());
+    },
+    deps,
+  );
 
-  // React.useEffect(
-  //   () => {
-  //     console.log('update');
-  //     updateSheet();
-  //   },
-  //   inputs,
-  // );
-
-  return {
+  return [
     classes,
-  };
+  ];
 };
 
 export default useClasses;

@@ -6,6 +6,7 @@ import useSelectState from './useSelectState';
 import selectStyles from './select.styles';
 import {
   useTheme,
+  useFocus,
   useClasses,
   useClickOutside,
 } from '../../common/hooks';
@@ -54,26 +55,26 @@ const Select: ISelect<ISelectProps> = (props) => {
     className,
   } = props;
 
-  const { theme } = useTheme();
-  const { classes } = useClasses(
-    selectStyles(props, theme),
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const [focus, setFocus] = useFocus(inputRef);
+  const [theme] = useTheme();
+  const [classes] = useClasses(
+    () => selectStyles(props, theme),
     [theme.type, props],
   );
   const {
-    focus,
-    setFocus,
     selectedValues,
     setSelectedValues,
   } = useSelectState({
     focus: false,
     selectedValues: defaultValue,
   });
-  const [node] = useClickOutside(setFocus(false));
+  const [containerRef] = useClickOutside(() => setFocus(false));
 
   return (
     <div
       className={className}
-      ref={node}
+      ref={containerRef}
     >
       <div
         className={classnames(
@@ -90,7 +91,7 @@ const Select: ISelect<ISelectProps> = (props) => {
           ))}
           <input
             className={classes.input}
-            onFocus={setFocus(true)}
+            ref={inputRef}
           />
         </div>
         {clearable && (

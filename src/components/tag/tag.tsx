@@ -45,9 +45,9 @@ const Tag: ITag<ITagProps> = (props) => {
     size,
   } = props;
 
-  const { theme } = useTheme();
-  const { classes } = useClasses(
-    tagStyles(props, theme),
+  const [theme] = useTheme();
+  const [classes] = useClasses(
+    () => tagStyles(props, theme),
     [theme.type, props],
   );
 
