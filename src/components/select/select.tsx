@@ -2,7 +2,6 @@ import * as React from 'react';
 import classnames from 'classnames';
 
 import { DISPLAY_NAME_PREFIX } from '../../common/info';
-import useSelectState from './useSelectState';
 import selectStyles from './select.styles';
 import {
   useTheme,
@@ -18,6 +17,7 @@ import {
 import {
   ISelect,
   ISelectProps,
+  ISelectOption,
   DefaultProps,
 } from './props';
 
@@ -55,21 +55,22 @@ const Select: ISelect<ISelectProps> = (props) => {
     className,
   } = props;
 
+  const [values, setValues] = React.useState(defaultValue);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [focus, setFocus] = useFocus(inputRef);
+  const [containerRef] = useClickOutside(() => setFocus(false));
   const [theme] = useTheme();
   const [classes] = useClasses(
     () => selectStyles(props, theme),
     [theme.type, props],
   );
-  const {
-    selectedValues,
-    setSelectedValues,
-  } = useSelectState({
-    focus: false,
-    selectedValues: defaultValue,
-  });
-  const [containerRef] = useClickOutside(() => setFocus(false));
+
+  const setSelectedValue = React.useCallback(
+    (selectedValue: ISelectOption) => () => {
+      setValues(prevValues => [...prevValues, selectedValue]);
+    },
+    [],
+  );
 
   return (
     <div
@@ -83,7 +84,7 @@ const Select: ISelect<ISelectProps> = (props) => {
         )}
       >
         <div className={classes.selectedDataContainer}>
-          {selectedValues && selectedValues.map(data => (
+          {values.length && values.map(data => (
             <MemoizedTag
               key={`${data.value}`}
               value={data}
@@ -106,7 +107,7 @@ const Select: ISelect<ISelectProps> = (props) => {
             <div
               key={option.value}
               className={classes.label}
-              onClick={setSelectedValues(option)}
+              onClick={setSelectedValue(option)}
             >
               {option.label}
             </div>

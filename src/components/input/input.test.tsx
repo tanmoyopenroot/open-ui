@@ -1,14 +1,11 @@
 import * as React from 'react';
 import * as enzyme from 'enzyme';
 
-import { createThemeStore } from '../../theme';
-
+import { ThemeProvider } from '../../theme';
 import { Input } from './input';
 import { IInputProps } from './props';
 
 const setup = () => {
-  createThemeStore();
-
   const props:IInputProps = {
     placeholder: 'Type something...',
     intent: Input.Intent.SUCCESS,
@@ -18,9 +15,9 @@ const setup = () => {
   };
 
   const wrapper = enzyme.mount(
-    <Input
-      {...props}
-    />,
+    <ThemeProvider>
+      <Input {...props} />
+    </ThemeProvider>,
   );
 
   return {

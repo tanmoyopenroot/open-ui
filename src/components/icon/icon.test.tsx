@@ -1,14 +1,11 @@
 import * as React from 'react';
 import * as enzyme from 'enzyme';
 
-import { createThemeStore } from '../../theme';
-
+import { ThemeProvider } from '../../theme';
 import { Icon } from './icon';
 import { IIconProps } from './props';
 
 const setup = () => {
-  createThemeStore();
-
   const props:IIconProps = {
     icon: Icon.Type.alarmClock,
     intent: Icon.Intent.ERROR,
@@ -18,9 +15,9 @@ const setup = () => {
   };
 
   const wrapper = enzyme.mount(
-    <Icon
-      {...props}
-    />,
+    <ThemeProvider>
+      <Icon {...props} />
+    </ThemeProvider>,
   );
 
   return {

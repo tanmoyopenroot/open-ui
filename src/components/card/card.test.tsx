@@ -1,24 +1,21 @@
 import * as React from 'react';
 import * as enzyme from 'enzyme';
 
-import { createThemeStore } from '../../theme';
-
+import { ThemeProvider } from '../../theme';
 import { Card } from './card';
 import { ICardProps } from './props';
 
 const setup = () => {
-  createThemeStore();
-
   const props:ICardProps = {
     elevation: Card.Elevation.TWO,
   };
 
   const wrapper = enzyme.mount(
-    <Card
-      {...props}
-    >
-      <h1>Test Card</h1>
-    </Card>,
+    <ThemeProvider>
+      <Card {...props}>
+        <h1>Test Card</h1>
+      </Card>
+    </ThemeProvider>,
   );
 
   return {
